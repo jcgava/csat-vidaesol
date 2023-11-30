@@ -172,14 +172,10 @@ async function getConversationUuid(id) {
   let data = null;
   await axios
     .get(
-      process.env.CHATWOOT_URL +
-        '/api/v1/accounts/' +
-        process.env.CHATWOOT_ACCOUNT +
-        '/conversations/' +
-        id,
+      `${process.env.CHATWOOT_URL}/api/v1/accounts/${process.env.CHATWOOT_ACCOUNT}/conversations/${id}`,
       {
         headers: {
-          api_access_token: process.env.CHATWOOT_KEY,
+          api_access_token: `${process.env.CHATWOOT_KEY}`,
         },
       }
     )
@@ -202,13 +198,11 @@ async function getConversationUuid(id) {
 async function postWebHookEvolutionChatwoot(params) {
   await axios
     .post(
-      process.env.EVOLUTION_URL +
-        '/chatwoot/webhook/' +
-        process.env.EVOLUTION_INSTANCE,
+      `${process.env.EVOLUTION_URL}/chatwoot/webhook/${process.env.EVOLUTION_INSTANCE}`,
       params,
       {
         headers: {
-          apikey: process.env.EVOLUTION_KEY,
+          apikey: `${process.env.EVOLUTION_KEY}`,
         },
       }
     )
@@ -228,13 +222,11 @@ async function postWebHookEvolutionChatwoot(params) {
 async function postWebHookEvolution(params) {
   await axios
     .post(
-      process.env.EVOLUTION_URL +
-        '/message/sendText/' +
-        process.env.EVOLUTION_INSTANCE,
+      `${process.env.EVOLUTION_URL}/message/sendText/${process.env.EVOLUTION_INSTANCE}`,
       params,
       {
         headers: {
-          apikey: process.env.EVOLUTION_KEY,
+          apikey: `${process.env.EVOLUTION_KEY}`,
         },
       }
     )
@@ -254,7 +246,7 @@ async function postWebHookEvolution(params) {
 async function postCSAT(params, conversation) {
   await axios
     .put(
-      process.env.CHATWOOT_URL + '/public/api/v1/csat_survey/' + conversation,
+      `${process.env.CHATWOOT_URL}/public/api/v1/csat_survey/${conversation}`,
       {
         message: {
           submitted_values: {
