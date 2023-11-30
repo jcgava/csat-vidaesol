@@ -44,8 +44,8 @@ app.post('/', async (req, res) => {
       });
     } else {
       // existe
-      console.log(resultCon instanceof conexao); // true
-      console.log('Conversation Created Existe: ', resultCon.remoteJid); // 'My Title'
+      // console.log(resultCon instanceof conexao); // true
+      // console.log('Conversation Created Existe: ', resultCon.remoteJid); // 'My Title'
     }
   } else {
     if (data.message_type === 'incoming') {
@@ -59,10 +59,10 @@ app.post('/', async (req, res) => {
         //   conversation_id: uuid.id,
         //   conversation_uuid: uuid.uuid,
         // });
-        console.log('Null: ', resultCon instanceof conexao); // true
+        // console.log('Null: ', resultCon instanceof conexao); // true
       } else {
         // existe
-        console.log('Existe Incoming: ', resultCon.remoteJid); // 'My Title'
+        // console.log('Existe Incoming: ', resultCon.remoteJid); // 'My Title'
         if (
           resultCon.csat === 'input_csat' &&
           data.event !== 'message_updated'
@@ -161,11 +161,18 @@ app.listen(port, () => {
 async function getConversationUuid(id) {
   let data = null;
   await axios
-    .get('https://central.gava.dev.br/api/v1/accounts/1/conversations/' + id, {
-      headers: {
-        api_access_token: 'FBxAqDLFzrgSMY2y5Tdy9hXu',
-      },
-    })
+    .get(
+      process.env.CHATWOOT_URL +
+        '/api/v1/accounts/' +
+        process.env.CHATWOOT_ACCOUNT +
+        '/conversations/' +
+        id,
+      {
+        headers: {
+          api_access_token: process.env.CHATWOOT_KEY,
+        },
+      }
+    )
     .then(function (response) {
       // handle success
       // console.log('resp: ', response);
@@ -184,11 +191,17 @@ async function getConversationUuid(id) {
 
 async function postWebHookEvolutionChatwoot(params) {
   await axios
-    .post('https://whats.gava.dev.br/chatwoot/webhook/WhatsappGava', params, {
-      headers: {
-        apikey: 'c7cef13189230c6005a0e08f573afc4b',
-      },
-    })
+    .post(
+      process.env.EVOLUTION_URL +
+        '/chatwoot/webhook/' +
+        process.env.EVOLUTION_INSTANCE,
+      params,
+      {
+        headers: {
+          apikey: process.env.EVOLUTION_KEY,
+        },
+      }
+    )
     .then(function (response) {
       // handle success
       // console.log('resp: ', response.data);
@@ -204,11 +217,17 @@ async function postWebHookEvolutionChatwoot(params) {
 
 async function postWebHookEvolution(params) {
   await axios
-    .post('https://whats.gava.dev.br/message/sendText/WhatsappGava', params, {
-      headers: {
-        apikey: 'c7cef13189230c6005a0e08f573afc4b',
-      },
-    })
+    .post(
+      process.env.EVOLUTION_URL +
+        '/message/sendText/' +
+        process.env.EVOLUTION_INSTANCE,
+      params,
+      {
+        headers: {
+          apikey: process.env.EVOLUTION_KEY,
+        },
+      }
+    )
     .then(function (response) {
       // handle success
       // console.log('resp: ', response.data);
@@ -225,7 +244,7 @@ async function postWebHookEvolution(params) {
 async function postCSAT(params, conversation) {
   await axios
     .put(
-      'https://central.gava.dev.br/public/api/v1/csat_survey/' + conversation,
+      process.env.CHATWOOT_URL + '/public/api/v1/csat_survey/' + conversation,
       {
         message: {
           submitted_values: {
