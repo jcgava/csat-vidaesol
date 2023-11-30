@@ -11,8 +11,11 @@ const { conexao } = require('./models');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-  console.log('process.env.USER_ID :>> ', process.env.CHATWOOT_URL);
+app.get('/', async (req, res) => {
+  // console.log('process.env.USER_ID :>> ', process.env.CHATWOOT_URL);
+  // const resultCon = await conexao.findAll();
+  // console.log(resultCon.every((conexao) => conexao instanceof conexao)); // true
+  // console.log('All users:', JSON.stringify(resultCon, null, 2));
   res.send('Hello');
 });
 
@@ -105,8 +108,8 @@ app.post('/', async (req, res) => {
       if (resultCon === null) {
       } else {
         // existe
-        console.log(resultCon instanceof conexao); // true
-        console.log('Existe Outgoing: ', resultCon.remoteJid); // 'My Title'
+        // console.log(resultCon instanceof conexao); // true
+        // console.log('Existe Outgoing: ', resultCon.remoteJid); // 'My Title'
         if (resultCon.csat !== 'finish') {
           await postWebHookEvolutionChatwoot(data);
         } else {

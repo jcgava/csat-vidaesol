@@ -6,4 +6,5 @@ ENV COMMIT_ID=${COMMIT_ID}
 COPY . .
 RUN npm ci --only=production
 EXPOSE 3000
-CMD ["node", "index.js"]
+CMD ["npm", "run", "prod"]
+#CMD ["node", "index.js"]

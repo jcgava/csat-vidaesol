@@ -1,4 +1,5 @@
 .env-dev
 node_modules
+docker-compose.yaml
 *.txt
 db/*

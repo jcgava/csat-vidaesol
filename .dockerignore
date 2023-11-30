@@ -1,3 +1,4 @@
 .env-dev
 *.txt
+docker-compose.yaml
 db/*
