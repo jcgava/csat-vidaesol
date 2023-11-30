@@ -53,6 +53,13 @@ app.post('/', async (req, res) => {
         where: { remoteJid: data.sender.identifier },
       });
       if (resultCon === null) {
+        const uuid = await getConversationUuid(data.conversation.id);
+        await conexao.create({
+          remoteJid: data.sender.identifier,
+          conversation_id: uuid.id,
+          conversation_uuid: uuid.uuid,
+        });
+        await postWebHookEvolutionChatwoot(data);
         // const uuid = await getConversationUuid(data.id);
         // await conexao.create({
         //   remoteJid: data.meta.sender.identifier,
